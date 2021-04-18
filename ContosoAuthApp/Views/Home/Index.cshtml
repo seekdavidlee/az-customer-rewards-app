@@ -1,0 +1,40 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+	<h1 class="display-3">Claims</h1>
+
+	@{
+		if (User.IsInRole(EasyAuthConstants.AgentRoleName))
+		{
+			<p>Agent role assigned!</p>
+		}
+
+		if (User.IsInRole(EasyAuthConstants.SupervisorRoleName))
+		{
+			<p>Supervisor role assigned!</p>
+		}
+	}
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Type</th>
+				<th scope="col">Value</th>
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach (var claim in User.Claims)
+				{
+					<tr>
+						<td>@claim.Type </td>
+						<td>@claim.Value </td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+
+</div>
