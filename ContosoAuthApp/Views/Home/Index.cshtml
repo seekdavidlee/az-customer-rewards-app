@@ -3,38 +3,49 @@
 }
 
 <div class="text-center">
-	<h1 class="display-3">Claims</h1>
 
 	@{
+		bool hasRole = false;
 		if (User.IsInRole(EasyAuthConstants.AgentRoleName))
 		{
-			<p>Agent role assigned!</p>
+			hasRole = true;
+		<p>Agent role assigned!</p>
 		}
 
 		if (User.IsInRole(EasyAuthConstants.SupervisorRoleName))
 		{
-			<p>Supervisor role assigned!</p>
+			hasRole = true;
+		<p>Supervisor role assigned!</p>
 		}
-	}
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">Type</th>
-				<th scope="col">Value</th>
-			</tr>
-		</thead>
-		<tbody>
-			@{
-				foreach (var claim in User.Claims)
-				{
+		if (hasRole)
+		{
+		<h1 class="display-5">Claims</h1>
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Type</th>
+					<th scope="col">Value</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+						foreach (var claim in User.Claims)
+						{
 					<tr>
 						<td>@claim.Type </td>
 						<td>@claim.Value </td>
 					</tr>
+						}
 				}
-			}
-		</tbody>
-	</table>
+			</tbody>
+		</table>
+		}
+		else
+		{
+		<h1 class="text-danger">An Error has occured!</h1>
+		<h2 class="text-danger">Although you are authenticated, you are NOT authorized to view the content because you do not have a valid role assigned.</h2>
+		}
+	}
 
 </div>
