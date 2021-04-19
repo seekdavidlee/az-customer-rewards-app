@@ -33,7 +33,9 @@ namespace ContosoAuthApp
 			if (!IsEasyAuth())
 			{
 				services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-					.AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
+					.AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"))
+					.EnableTokenAcquisitionToCallDownstreamApi()
+					.AddInMemoryTokenCaches();
 			}
 
 			services.AddControllersWithViews(options =>
